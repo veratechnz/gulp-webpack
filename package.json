@@ -4,6 +4,7 @@
   "description": "A webpack capable gulp template that can be used for Formative 1",
   "main": "index.js",
   "dependencies": {
+    "axios": "^0.19.2",
     "gulp": "^3.9.0"
   },
   "devDependencies": {
