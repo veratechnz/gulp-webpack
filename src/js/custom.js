@@ -1,9 +1,10 @@
+var axios = require('axios');
+
 // custom js file
 
 (function(){
 
-	alert('working');
+	console.log('vvv');
 
 
-
-})(); // iffe ENDS
+})(); // iffe ENDS ......

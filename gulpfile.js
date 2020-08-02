@@ -8,54 +8,58 @@ var gulp = require('gulp');
     minifyCss = require('gulp-minify-css');
     gulp = require('gulp');
     webpack = require('webpack-stream');
+    browserSync = require('browser-sync').create();
 
 // Server Task
-gulp.task('serve', function(event) {
-    connect.server({
-        root: '',
-        port: 1988,
-        livereload: true
+gulp.task('serve', function() {
+    browserSync.init({
+        server: {
+           baseDir: ".",
+           index: "/index.html"
+        }
     });
 });
 
 // Styles Task
 gulp.task('styles', function() {
-    gulp.src('src/sass/custom.scss')
+    return gulp.src('src/sass/custom.scss')
         .pipe(sass({outputStyle: 'compressed'}).on('error', sass.logError))
         .pipe(rename({suffix: '.min'}))
         .pipe(minifyCss())
         .pipe(gulp.dest('dist/css/'))
-        .pipe(connect.reload());
+        .pipe(browserSync.stream());
 });
 
-// HTML Task
+// HTML Task for html changes 
 gulp.task('html', function() {
-    gulp.src('./*.html')
-    	.pipe(connect.reload());
+    return gulp.src('./*.html')
+           .pipe(browserSync.stream());
 });
 
 // JS Lint Task for correcting and monitoring your custom.js
 gulp.task('lint', function(){
-    gulp.src('src/js/*.js')
+    return gulp.src('src/js/*.js')
     .pipe(jshint())
 	.pipe(jshint.reporter('default'))
-	.pipe(connect.reload());
+	.pipe(browserSync.stream());
 });
 
+// For all webpack work for modules and imports/require
 gulp.task('webpack', function() {
-  return gulp.src('src/js/custom.js')
-    .pipe(webpack())
-    .pipe(rename('bundle.js'))
-    .pipe(gulp.dest('dist/js/'));
+    return gulp.src('src/js/custom.js')
+      .pipe(webpack())
+      .pipe(rename('bundle.js'))
+      .pipe(gulp.dest('dist/js/'))
+      .pipe(browserSync.stream());
 });
 
 // Watch task to watch for file changes
 gulp.task('watch', function(){
-	gulp.watch('src/sass/**/*.scss', ['styles']);
-	gulp.watch('./*.html', ['html']); 
-	gulp.watch('src/js/*.js', ['lint']);
-    gulp.watch('src/js/*.js', ['webpack']);
+	gulp.watch('src/sass/**/*.scss', gulp.series('styles'));
+	gulp.watch('./*.html', gulp.series('html')); 
+	gulp.watch('src/js/*.js', gulp.series('lint'));
+    gulp.watch('src/js/*.js', gulp.series('webpack'));
 });
 
 // Tasks that Gulp will run
-gulp.task('default', ['serve', 'styles', 'html', 'watch', 'webpack']);
+gulp.task('default', gulp.parallel('serve', 'styles', 'html', 'lint', 'webpack', 'watch'));
