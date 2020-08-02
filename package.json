@@ -1,5 +1,5 @@
 {
-  "name": "News API Demo",
+  "name": "newsapidemo",
   "version": "1.0.0",
   "description": "A webpack capable gulp template that can be used for Formative 1",
   "main": "index.js",
