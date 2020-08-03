@@ -41,7 +41,6 @@
      return gulp.src('src/js/*.js')
          .pipe(jshint())
          .pipe(jshint.reporter('default'))
-         // .pipe(browserSync.stream());
  });
 
  // For all webpack work for modules and imports/require
