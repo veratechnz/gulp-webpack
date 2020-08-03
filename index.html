@@ -8,10 +8,20 @@
 </head>
 <body>
 
+	<!--Vue App Begins -->
 	<div id="app">
+
 		<h1>{{message}}</h1>
-		<h2>{{another}}</h2>
-	</div>
+		<ul id="example-1" v-if="news">
+		  <li v-for="item in news.slice(0, 8)" :key="item.author" class="news-item">
+		   <span class="author">{{ item.author }}</span><span class="description">{{item.description}}</span>
+		  </li>
+		</ul>
+
+  </div>
+  <!-- app ENDS -->
+
+	<!-- articles[0].author -->
 	<script src="/dist/js/bundle.js"></script>
 </body>
 </html>

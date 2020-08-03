@@ -1,6 +1,36 @@
 // Custom sass 
+html {
+  padding: 15px;
+}
 
 h1 {
   color: #333;
-  font-size: 50px;
+  font-size: 34px;
+  padding-left: 12px;
+  margin-bottom: 18px;
+  font-style: italic;
+}
+
+ul {
+ list-style-type: none;
+ padding-left: 15px;
+}
+
+.author {
+  text-transform: uppercase;
+  padding-right: 0.5em;
+  display: block;
+  font-weight: 600;
+  margin-bottom: 0.15em;
+}
+
+.discription {
+  display: block;
+}
+
+.news-item {
+  margin-bottom: 0.8em;
+  background-color: #efefef;
+  padding: 0.75em;
+  width: 50%;
 }
