@@ -11,15 +11,25 @@
 	<!--Vue App Begins -->
 	<div id="app">
 
+	<div id="home" class="home" v-if="home">
 		<h1>{{message}}</h1>
+		<button type="button" class="btn btn-primary" @click="home = false">About</button>
 		<ul id="example-1" v-if="news">
-		  <li v-for="item in news.slice(0, 8)" :key="item.author" class="news-item">
+		  <li v-for="(item, index) in news.slice(0, 8)" :key="item.author" class="news-item" v-bind:value="index"  @mouseover="getContextForUi($event, index)">
 		   <span class="author">{{ item.author }}</span><span class="description">{{item.description}}</span>
 		  </li>
 		</ul>
+	</div> 
+	<!-- home section ENDS -->
+
+	<div id="about" class="about" v-if="home === false">
+		<h1>About Page</h1>
+		<button type="button" class="btn btn-primary" @click="home = true">Home</button>
+	</div> 
+	<!-- home section ENDS -->
 
   </div>
-  <!-- app ENDS -->
+  <!--Vue app ENDS -->
 
 	<!-- articles[0].author -->
 	<script src="/dist/js/bundle.js"></script>

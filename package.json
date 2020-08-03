@@ -4,8 +4,11 @@
   "description": "A webpack capable gulp template that can be used for Formative 1",
   "main": "index.js",
   "dependencies": {
+    "@babel/core": "^7.11.0",
     "axios": "^0.19.2",
+    "babel-loader": "^8.1.0",
     "gulp": "^4.0.0",
+    "tippy.js": "^6.2.6",
     "vue": "^2.6.11"
   },
   "devDependencies": {
