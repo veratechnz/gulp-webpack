@@ -8,28 +8,36 @@
 </head>
 <body>
 
-	<!--Vue App Begins -->
 	<div id="app">
 
-	<div id="home" class="home" v-if="home">
-		<h1>{{message}}</h1>
-		<button type="button" class="btn btn-primary" @click="home = false">About</button>
-		<ul id="example-1" v-if="news">
-		  <li v-for="(item, index) in news.slice(0, 8)" :key="item.author" class="news-item" v-bind:value="index"  @mouseover="getContextForUi($event, index)">
-		   <span class="author">{{ item.author }}</span><span class="description">{{item.description}}</span>
-		  </li>
-		</ul>
-	</div> 
-	<!-- home section ENDS -->
+	<!-- Home page STARTS -->
+		<div class="home" id="home" v-if="display">
+			<h1>{{message}}</h1>
+			<button @click="goAboutPage()">About Page</button>
+			<ul v-if="news">
+				<li v-for="item in news" class="news-item" @mouseover="hoverWithTippy()" @click="generateArticleDisplay(item)">
 
-	<div id="about" class="about" v-if="home === false">
-		<h1>About Page</h1>
-		<button type="button" class="btn btn-primary" @click="home = true">Home</button>
-	</div> 
-	<!-- home section ENDS -->
+					<span class="author">{{item.author | checkForAuthor}}</span>
 
-  </div>
-  <!--Vue app ENDS -->
+					<span class="description">{{item.description | allWordCaps}}</span>
+				</li>
+			</ul>
+			<div class="content-display" id="contentDisplay" v-show="displayPanel">
+				<p>{{displayPanel}}</p>
+			</div>
+		</div>
+		<!-- Home page ENDS -->
+
+		<!-- About page STARTS -->
+		<div class="about" id="about" v-if="display === false">
+			<h1 @click="basicAlert()">{{aboutPage}}</h1>
+			<button @click="goHomePage()">Home Page</button>
+		</div>
+		<!-- About page ENDS -->
+
+
+	</div>
+	<!-- App ENDS -->
 
 	<!-- articles[0].author -->
 	<script src="/dist/js/bundle.js"></script>

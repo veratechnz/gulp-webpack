@@ -4,61 +4,83 @@ var axios = require('axios');
 // Vue needs additional files and build tools so this way works
 // for our current gulp/webpack setup:
 import Vue from 'vue/dist/vue.js';
-// A tool tip plugin
 import tippy from 'tippy.js';
-
+import anime from 'animejs/lib/anime.es.js';
 
 (function(){
 
-	// Setup the vue instance
+// Vue World
 	var app = new Vue({
 	  el: '#app',
 	  data: {
-	    message: 'Today\'s Reporters:',
-	    news: false,
-	    home: true
+	    message: 'News Items',
+			aboutPage: 'About Page',
+			news: false,
+			display: true,
+			displayPanel: false
 	  },
-	  mounted () {
-	    this.instanceLoaded()
-	  },
-	  methods: {
-	  	// This is a vue method that is called from a vue instance life cycle hook
-	  	instanceLoaded: function () {
-	  		console.log('working...instance loaded')
-	  	}, // placeTooltips END
-	  	// This is a vue method that is called from a vue instance life cycle hook
-	  	getContextForUi: function (event, index) {
-	  		console.log(index)
-	  		console.log(event)
-	  		// With the above scripts loaded, you can call `tippy()` with a CSS
-	  		// selector and a `content` prop:
-	  		tippy('.news-item', {
-	  		  content: 'Click To View Full Article',
-	  		  placement: 'right'
-	  		});
-	  	} // placeTooltips END
-	  
-	  } // methods END
+		mounted () {
+			console.log('vue is mounted')
+		},
+		methods: {
+			goAboutPage: function () {
+				console.log('working switch')
+				this.display = false;
+			},
+			goHomePage: function () {
+				console.log('working switch')
+				this.display = true;
+			},
+			hoverWithTippy: function () {
+				// Adding tippy hover to the display divs
+				tippy('.news-item', {
+        	content: 'Click Item To See More...',
+					placement: 'left'
+	      });
+			},
+			generateArticleDisplay: function (whatItem) {
+				// Adding relevant info from item....from vue reference
+				// See v-for="item in news" @click="generateArticleDisplay(item)"
+				// Then update vue's display property
+				this.displayPanel = whatItem.content
+				anime({
+		      targets: '#contentDisplay',
+		      opacity: [0, 1],
+		      easing: 'easeInOutSine'
+		    })
+			}
+		}, // methods END
+		filters: {
+		  reverseText: function (value) {
+		    return value.split('').reverse().join('')
+		  },
+		  allWordCaps: function (value) {
+		  	value = value.toLowerCase()
+		  	    .split(' ')
+		  	    .map((s) => s.charAt(0).toUpperCase() + s.substring(1))
+		  	    .join(' ');
+		  	return value
+		  },
+		  checkForAuthor: function (value) {
+		  	if (value === null || value === undefined) {
+		  		value = 'No Author Provided';
+		  	}
+		  	return value
+		  }
+		}
+	});
+// Vue World ENDS
 
-	}) // vue instance END
-
-	// Connect and get data from API
-	// GET request for remote image
+	// GET request for remote image in node.js
 	axios({
 	  method: 'get',
-	  // Call to the news api
-	  url: 'http://newsapi.org/v2/everything?q=bitcoin&from=2020-07-03&sortBy=publishedAt&apiKey=4d3b541f038945ef8d06d25795556ce4'
+	  url: 'https://newsapi.org/v2/top-headlines?q=trump&apiKey=4d3b541f038945ef8d06d25795556ce4'
 	})
-	  .then(function(response) {
-	  // Add data from api to the vue app data above
-	  app.news = response.data.articles
-	  console.dir(app.news)
-	  init()
+	.then(function (response) {
+		console.log(response.data)
+		// Call external function that removes empty null values
+		console.log('abc')
+		app.news = response.data.articles;
 	});
-	// axios ENDS
-
-	function init () {
-		console.log('an init function outside of vue.js')
-	}
 
 })(); // iffe ENDS
