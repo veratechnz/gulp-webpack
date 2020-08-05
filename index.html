@@ -14,14 +14,14 @@
 		<div class="home" id="home" v-if="display">
 			<h1>{{message}}</h1>
 			<button @click="goAboutPage()">About Page</button>
+			<!-- If no news data in vue object do not show/render the list -->
 			<ul v-if="news">
 				<li v-for="item in news" class="news-item" @mouseover="hoverWithTippy()" @click="generateArticleDisplay(item)">
-
 					<span class="author">{{item.author | checkForAuthor}}</span>
-
 					<span class="description">{{item.description | allWordCaps}}</span>
 				</li>
 			</ul>
+			<!-- Display panel and content for when news item is clicked -->
 			<div class="content-display" id="contentDisplay" v-show="displayPanel">
 				<p>{{displayPanel}}</p>
 			</div>

@@ -51,16 +51,21 @@ import anime from 'animejs/lib/anime.es.js';
 			}
 		}, // methods END
 		filters: {
+			// A filter that reverses text
 		  reverseText: function (value) {
+		  	// This reverses the text
 		    return value.split('').reverse().join('')
 		  },
+		  // A filter that makes a capital letter out of each word
 		  allWordCaps: function (value) {
 		  	value = value.toLowerCase()
+		  	// Uses array methods and ecma script 6 to do the text to uppercase
 		  	    .split(' ')
 		  	    .map((s) => s.charAt(0).toUpperCase() + s.substring(1))
 		  	    .join(' ');
 		  	return value
 		  },
+		  // A filter for updating a no author name provided case
 		  checkForAuthor: function (value) {
 		  	if (value === null || value === undefined) {
 		  		value = 'No Author Provided';
@@ -78,8 +83,6 @@ import anime from 'animejs/lib/anime.es.js';
 	})
 	.then(function (response) {
 		console.log(response.data)
-		// Call external function that removes empty null values
-		console.log('abc')
 		app.news = response.data.articles;
 	});
 
