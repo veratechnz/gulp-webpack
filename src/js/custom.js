@@ -28,6 +28,13 @@ import anime from 'animejs/lib/anime.es.js';
 	})
 	// Vue Component Registration ENDS
 
+	// Define a new component called author
+	Vue.component('author', {
+		props: ['title'],
+	  template: '<span class="author">{{title}}</span>'
+	})
+	// Vue Component Registration ENDS
+
 
 // Initiate the Vue App and Instance
 	var app = new Vue({

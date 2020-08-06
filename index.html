@@ -20,7 +20,7 @@
 				<!-- The hover/mouseover triggers a vue method hoverWithTippy that places a tooltip -->
 				<!-- A click event triggers another vue method that applies news data to the HTML -->
 				<li v-for="item in news" class="news-item" @mouseover="hoverWithTippy()" @click="generateArticleDisplay(item)">
-					<span class="author">{{item.author | checkForAuthor}}</span>
+					<author v-bind:title="item.author"></author>
 					<span class="description">{{item.description | allWordCaps}}</span>
 				</li>
 			</ul>
