@@ -9,7 +9,27 @@ import anime from 'animejs/lib/anime.es.js';
 
 (function(){
 
-// Vue World
+
+	// Vue Components
+	// Define a new component called button-counter
+	Vue.component('home-button', {
+	  data: function () {
+	    return {
+	      aboutPage: 'About Page',
+	    }
+	  },
+	  methods: {
+	  	goAboutPage: function () {
+	  		 console.log('working')
+	  		 this.$emit('about-go', false)
+	  		}
+	  },
+	  template: '<button @click="goAboutPage">About Page</button>'
+	})
+	// Vue Component Registration ENDS
+
+
+// Initiate the Vue App and Instance
 	var app = new Vue({
 	  el: '#app',
 	  data: {
@@ -23,12 +43,13 @@ import anime from 'animejs/lib/anime.es.js';
 			console.log('vue is mounted')
 		},
 		methods: {
-			goAboutPage: function () {
-				console.log('working switch')
+			receiveEmitData: function (val) {
+				console.log('ok ok')
+				console.log(val)
 				this.display = false;
 			},
 			goHomePage: function () {
-				console.log('working switch')
+				// console.log('working switch')
 				this.display = true;
 			},
 			hoverWithTippy: function () {
@@ -43,6 +64,7 @@ import anime from 'animejs/lib/anime.es.js';
 				// See v-for="item in news" @click="generateArticleDisplay(item)"
 				// Then update vue's display property
 				this.displayPanel = whatItem.content
+				// Using anime.js to create a fade in effect for the news item
 				anime({
 		      targets: '#contentDisplay',
 		      opacity: [0, 1],

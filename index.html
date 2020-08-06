@@ -13,9 +13,12 @@
 	<!-- Home page STARTS -->
 		<div class="home" id="home" v-if="display">
 			<h1>{{message}}</h1>
-			<button @click="goAboutPage()">About Page</button>
+			<!-- This is a vue component - the home button -->
+			<home-button @about-go="receiveEmitData"></home-button>
 			<!-- If no news data in vue object do not show/render the list -->
 			<ul v-if="news">
+				<!-- The hover/mouseover triggers a vue method hoverWithTippy that places a tooltip -->
+				<!-- A click event triggers another vue method that applies news data to the HTML -->
 				<li v-for="item in news" class="news-item" @mouseover="hoverWithTippy()" @click="generateArticleDisplay(item)">
 					<span class="author">{{item.author | checkForAuthor}}</span>
 					<span class="description">{{item.description | allWordCaps}}</span>
