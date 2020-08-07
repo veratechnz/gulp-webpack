@@ -3,12 +3,55 @@
 <head>
 	<meta charset="UTF-8">
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-	<link rel="stylesheet" href="css/custom.min.css">
-	<title>Project</title>
+	<link rel="stylesheet" type="text/css" href="dist/css/custom.min.css">
+	<title>News API</title>
 </head>
 <body>
-	<script src="js/bundle.js"></script>
-	<h1>Hello World</h1>
 
+
+	<div id="app">
+
+	<!-- Home page STARTS -->
+		<div class="home" id="home" v-if="display">
+			<!-- The curly brackets represents declarative rendering. Used to output data  -->
+			<!-- // into the dom from the vue data object -->
+			<h1>{{message}}</h1>
+			<!-- This is a vue component - the home button -->
+			<home-button @about-go="receiveEmitData"></home-button>
+			<!-- If no news data in vue object do not show/render the list -->
+			<ul v-if="news">
+				<!-- The hover/mouseover triggers a vue method hoverWithTippy that places a tooltip -->
+				<!-- A click event triggers another vue method that applies news data to the HTML -->
+				<li v-for="item in news" class="news-item" @mouseover="hoverWithTippy()" @click="generateArticleDisplay(item)">
+					<!-- author is a vue component defined in custom.js. This uses a property 'title' -->
+					<!-- to receive data from the parent.  -->
+					<author v-bind:title="item.author | checkForAuthor"></author>
+					<!-- Description is using a filter to apply capital letters to the  -->
+					<!-- beginning of each word. -->
+					<span class="description">{{item.description | allWordCaps}}</span>
+				</li>
+			</ul>
+			<!-- Display panel and content for when news item is clicked -->
+			<!-- The display panel is dynamically generated and updated when someone -->
+			<!-- clicks on an article item above: via generateArticleDisplay(item) -->
+			<div class="content-display" id="contentDisplay" v-show="displayPanel">
+				<p>{{displayPanel}}</p>
+			</div>
+		</div>
+		<!-- Home page ENDS -->
+
+		<!-- About page STARTS -->
+		<div class="about" id="about" v-if="display === false">
+			<h1 @click="basicAlert()">{{aboutPage}}</h1>
+			<button @click="goHomePage()">Home Page</button>
+		</div>
+		<!-- About page ENDS -->
+
+
+	</div>
+	<!-- App ENDS -->
+
+	<!-- articles[0].author -->
+	<script src="/dist/js/bundle.js"></script>
 </body>
 </html>
