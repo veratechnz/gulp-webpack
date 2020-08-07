@@ -19,8 +19,11 @@ import anime from 'animejs/lib/anime.es.js';
 	    }
 	  },
 	  methods: {
+	  	// this method function is called from the vue home-button component
+	  	// within the html
 	  	goAboutPage: function () {
-	  		 console.log('working')
+
+	  		 // This statement emits an event
 	  		 this.$emit('about-go', false)
 	  		}
 	  },
@@ -39,6 +42,8 @@ import anime from 'animejs/lib/anime.es.js';
 // Initiate the Vue App and Instance
 	var app = new Vue({
 	  el: '#app',
+	  // Data is an object on the vue instance that can be constantly used for
+	  // updating and informing the html/dom
 	  data: {
 	    message: 'News Items',
 			aboutPage: 'About Page',
@@ -46,10 +51,13 @@ import anime from 'animejs/lib/anime.es.js';
 			display: true,
 			displayPanel: false
 	  },
+	  // 'mounted' is what is known as a vue lifecycle hook. These can 
+	  // be used to trigger events and start processes, sort of like $(document).ready();
 		mounted () {
 			console.log('vue is mounted')
 		},
 		methods: {
+			// A list of vue methods that we are using within our application. 
 			receiveEmitData: function (val) {
 				console.log('ok ok')
 				console.log(val)
@@ -105,12 +113,13 @@ import anime from 'animejs/lib/anime.es.js';
 	});
 // Vue World ENDS
 
-	// GET request for remote image in node.js
+	// GET request for news api, made by axios...
 	axios({
 	  method: 'get',
 	  url: 'https://newsapi.org/v2/top-headlines?q=trump&apiKey=4d3b541f038945ef8d06d25795556ce4'
 	})
 	.then(function (response) {
+		// an axios promise function. response relates to the data being returned by the request.
 		console.log(response.data)
 		app.news = response.data.articles;
 	});
