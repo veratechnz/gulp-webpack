@@ -11,6 +11,24 @@
 
 	<div id="app">
 
+		<!-- Login Form -->
+		<div class="main">
+		   <div class="col-md-6 col-sm-12">
+		      <div class="login-form">
+	            <div class="form-group">
+	               <label>You Name</label>
+	               <input type="text" class="form-control" id="login" v-model="loginInfo" placeholder="User Name">
+	            </div>
+	            <div class="form-group">
+	               <label>Password</label>
+	               <input type="password" class="form-control" id="pass" v-model="passInfo" placeholder="Password">
+	            </div>
+	            <button class="btn btn-black" @click="loginTime">Login</button>
+		      </div>
+		   </div>
+		 </div>
+		   <!-- Login Form ENDS -->
+
 	<!-- Home page STARTS -->
 		<div class="home" id="home" v-if="display">
 			<!-- The curly brackets represents declarative rendering. Used to output data  -->
@@ -28,7 +46,7 @@
 					<author v-bind:title="item.author | checkForAuthor"></author>
 					<!-- Description is using a filter to apply capital letters to the  -->
 					<!-- beginning of each word. -->
-					<span class="description">{{item.description | allWordCaps}}</span>
+					<span class="description">{{item.description | reverseText}}</span>
 				</li>
 			</ul>
 			<!-- Display panel and content for when news item is clicked -->
@@ -47,11 +65,9 @@
 		</div>
 		<!-- About page ENDS -->
 
-
 	</div>
 	<!-- App ENDS -->
 
-	<!-- articles[0].author -->
 	<script src="/dist/js/bundle.js"></script>
 </body>
 </html>

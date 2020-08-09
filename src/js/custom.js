@@ -4,11 +4,11 @@ var axios = require('axios');
 // Vue needs additional files and build tools so this way works
 // for our current gulp/webpack setup:
 import Vue from 'vue/dist/vue.js';
-import tippy from 'tippy.js';
+import tippy from 'tippy.js/dist/tippy.umd.js';
 import anime from 'animejs/lib/anime.es.js';
+import toastr from 'izitoast/dist/js/iziToast.js';
 
 (function(){
-
 
 	// Vue Components
 	// Define a new component called button-counter
@@ -49,7 +49,9 @@ import anime from 'animejs/lib/anime.es.js';
 			aboutPage: 'About Page',
 			news: false,
 			display: true,
-			displayPanel: false
+			displayPanel: false,
+			passInfo: '',
+			loginInfo: ''
 	  },
 	  // 'mounted' is what is known as a vue lifecycle hook. These can 
 	  // be used to trigger events and start processes, sort of like $(document).ready();
@@ -85,7 +87,27 @@ import anime from 'animejs/lib/anime.es.js';
 		      opacity: [0, 1],
 		      easing: 'easeInOutSine'
 		    })
-			}
+			},
+			loginTime: function () {
+				var vueData = this;
+				console.log(this.loginInfo)
+				console.log(this.passInfo)
+				console.log('ttttt')
+
+				function useLocalStorage () {
+					localStorage.setItem('NewsApiName', vueData.loginInfo)
+					localStorage.setItem('NewsApiPassword', vueData.passInfo)
+					// Display an info toast with no title
+					console.log(toastr)
+					toastr.show({
+					    title: 'Hey',
+					    message: 'What would you like to add?',
+					    position: 'topCenter'
+					});
+			  }
+
+			  useLocalStorage();
+			 }
 		}, // methods END
 		filters: {
 			// A filter that reverses text
