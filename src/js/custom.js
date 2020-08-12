@@ -53,13 +53,20 @@ import toastr from 'izitoast/dist/js/iziToast.js';
 			passInfo: '',
 			loginInfo: ''
 	  },
-	  // 'mounted' is what is known as a vue lifecycle hook. These can 
+	  // 'mounted' is what is known as a vue lifecycle hook. These can
 	  // be used to trigger events and start processes, sort of like $(document).ready();
 		mounted () {
 			console.log('vue is mounted')
+			if (localStorage.getItem('NewsApiReference') != null) {
+			  toastr.show({
+				    title: localStorage.getItem('NewsApiReference'),
+				    message: 'Welcome back, remember to login...',
+				    position: 'topCenter'
+				});
+			}
 		},
 		methods: {
-			// A list of vue methods that we are using within our application. 
+			// A list of vue methods that we are using within our application.
 			receiveEmitData: function (val) {
 				console.log('ok ok')
 				console.log(val)
@@ -90,24 +97,28 @@ import toastr from 'izitoast/dist/js/iziToast.js';
 			},
 			loginTime: function () {
 				var vueData = this;
-				console.log(this.loginInfo)
-				console.log(this.passInfo)
-				console.log('ttttt')
-
-				function useLocalStorage () {
-					localStorage.setItem('NewsApiName', vueData.loginInfo)
-					localStorage.setItem('NewsApiPassword', vueData.passInfo)
-					// Display an info toast with no title
-					console.log(toastr)
-					toastr.show({
-					    title: 'Hey',
-					    message: 'What would you like to add?',
-					    position: 'topCenter'
-					});
-			  }
-
-			  useLocalStorage();
-			 }
+				localStorage.setItem('NewsApiName', vueData.loginInfo)
+				localStorage.setItem('NewsApiPassword', vueData.passInfo)
+				localStorage.setItem('NewsApiReference', vueData.loginInfo)
+				// Display an info toast with no title
+				console.log(toastr)
+				toastr.show({
+				    title: vueData.loginInfo,
+				    message: 'Welcome, you are now logged in.',
+				    position: 'topCenter'
+				});
+			},
+			logoutTime: function () {
+				// comment ..
+				var vueData = this;
+				localStorage.removeItem('NewsApiName', vueData.loginInfo);
+				localStorage.removeItem('NewsApiPassword', vueData.loginInfo)
+				toastr.show({
+				    title: vueData.loginInfo,
+				    message: 'See you next time, you are now logged out.',
+				    position: 'topCenter'
+				});
+			}
 		}, // methods END
 		filters: {
 			// A filter that reverses text
